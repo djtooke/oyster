@@ -17,6 +17,7 @@ class OysterCard
 
   def touch_out
     raise "You've already touched out" unless touched_in?
+    @balance -= MIN_CAPACITY
     @in_journey = false
   end
 

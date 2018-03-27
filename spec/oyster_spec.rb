@@ -51,6 +51,11 @@ describe OysterCard do
       oyster_card10.touch_out
       expect(oyster_card10.in_journey).to eq(false)
     end
+
+    it 'charges minimum fare for a journey on touch out' do
+      oyster_card10.touch_in
+      expect { oyster_card10.touch_out }.to change { oyster_card10.balance }.from(10).to(9)
+    end
   end
 
   describe '.touched_in?' do
