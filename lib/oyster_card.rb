@@ -1,6 +1,7 @@
 class OysterCard
   attr_reader :balance, :in_journey
   MAX_CAPACITY = 90
+  MIN_CAPACITY = 1
 
   def initialize(balance = 0)
     @balance = balance
@@ -10,6 +11,7 @@ class OysterCard
 
   def touch_in
     raise 'You are already touched in' if touched_in?
+    raise 'Not enough balance' if @balance < MIN_CAPACITY
     @in_journey = true
   end
 
