@@ -49,13 +49,13 @@ describe OysterCard do
 
   describe '.touched_in?' do
     it 'returns true when touched in' do
-      oyster_card.stub(:in_journey) { true }
-      expect(oyster_card.touched_in?).to eq true
+      oyster_card.touch_in
+      expect(oyster_card).to be_touched_in
     end
 
     it 'returns false when not touched in' do
-      oyster_card.stub(:in_journey) { false }
-      expect(oyster_card.touched_in?).to eq false
+      oyster_card.touch_out
+      expect(oyster_card).not_to be_touched_in
     end
   end
 

@@ -4,7 +4,9 @@ class OysterCard
 
   def initialize(balance = 0)
     @balance = balance
+    @in_journey = false
   end
+
 
   def touch_in
     raise 'You are already touched in' if touched_in?
@@ -12,11 +14,12 @@ class OysterCard
   end
 
   def touch_out
+    raise "You've already touched out" unless touched_in?
     @in_journey = false
   end
 
   def touched_in?
-    in_journey
+    @in_journey
   end
 
   def top_up(amount)
