@@ -56,6 +56,7 @@ describe OysterCard do
   end
 
   describe '.touch_out' do
+
     it 'it ends a journey by deleting the entry station' do
       oyster_card10.touch_in(station)
       oyster_card10.touch_out(station2)
@@ -73,7 +74,11 @@ describe OysterCard do
       expect(oyster_card10.readlog).to include(a_hash_including(:entry => station, :exit => station2))
     end
 
-
+    context 'when not touched in' do
+      it 'raises an error' do
+        expect {oyster_card10.touch_out(station2)}.to raise_error 'You\'re not touched in'
+      end
+    end
   end
 
   describe '.touched_in?' do
@@ -88,7 +93,4 @@ describe OysterCard do
       expect(oyster_card10).not_to be_touched_in
     end
   end
-
-
-
 end

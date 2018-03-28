@@ -18,10 +18,10 @@ class OysterCard
   end
 
   def touch_out(station)
-    raise "You've already touched out" unless touched_in?
+    raise "You're not touched in" unless touched_in?
     deduct(MIN_CAPACITY)
     log_journey(@entry_station, station)
-    @entry_station = nil
+    clear_entry
   end
 
   def touched_in?
@@ -49,6 +49,10 @@ class OysterCard
 
   def log_journey(touchin, touchout)
     @history.save(touchin, touchout)
+  end
+
+  def clear_entry
+    @entry_station = nil
   end
 
 end
