@@ -29,7 +29,8 @@ describe OysterCard do
   describe '.touch_in' do
     it 'starts a journey' do
       oyster_card10.touch_in(station)
-      expect(oyster_card10.in_journey).to eq(true)
+      # expect(oyster_card10.in_journey).to eq(true)
+      expect(oyster_card10.entry_station).not_to be_nil
     end
 
     it 'should prevent touching in when balance is too low' do
@@ -50,21 +51,15 @@ describe OysterCard do
   end
 
   describe '.touch_out' do
-    it 'it ends a journey' do
+    it 'it ends a journey by deleting the entry station' do
       oyster_card10.touch_in(station)
       oyster_card10.touch_out
-      expect(oyster_card10.in_journey).to eq(false)
+      expect(oyster_card10.entry_station).to be_nil
     end
 
     it 'charges minimum fare for a journey on touch out' do
       oyster_card10.touch_in(station)
       expect { oyster_card10.touch_out }.to change { oyster_card10.balance }.from(10).to(9)
-    end
-
-    it 'should delete the record of the entry station' do
-      oyster_card10.touch_in(station)
-      oyster_card10.touch_out
-      expect(oyster_card10.entry_station).to be_nil
     end
 
   end

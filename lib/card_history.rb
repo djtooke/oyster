@@ -1,0 +1,3 @@
+class CardHistory
+
+end
