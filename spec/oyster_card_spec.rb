@@ -4,6 +4,7 @@ describe OysterCard do
   subject(:oyster_card) { OysterCard.new }
   subject(:oyster_card10) { OysterCard.new(10) }
   let(:station) { double :station }
+  let(:station2) { double :station }
 
   it 'responds with a balance of 0' do
     expect(oyster_card.balance).to eq 0
@@ -11,6 +12,10 @@ describe OysterCard do
 
   it 'has a record of the last touched in station' do
     expect(oyster_card).to respond_to (:entry_station)
+  end
+
+  it 'has a variable to record the journey history' do
+    expect(oyster_card).to respond_to (:history)
   end
 
   describe '.top_up' do
@@ -53,14 +58,21 @@ describe OysterCard do
   describe '.touch_out' do
     it 'it ends a journey by deleting the entry station' do
       oyster_card10.touch_in(station)
-      oyster_card10.touch_out
+      oyster_card10.touch_out(station2)
       expect(oyster_card10.entry_station).to be_nil
     end
 
     it 'charges minimum fare for a journey on touch out' do
       oyster_card10.touch_in(station)
-      expect { oyster_card10.touch_out }.to change { oyster_card10.balance }.from(10).to(9)
+      expect { oyster_card10.touch_out(station2) }.to change { oyster_card10.balance }.from(10).to(9)
     end
+
+    it 'saves the journey start/end stations to the record' do
+      oyster_card10.touch_in(station)
+      oyster_card10.touch_out(station2)
+      expect(oyster_card10.readlog).to include(a_hash_including(:entry => station, :exit => station2))
+    end
+
 
   end
 
@@ -72,9 +84,11 @@ describe OysterCard do
 
     it 'returns false when not touched in' do
       oyster_card10.touch_in(station)
-      oyster_card10.touch_out
+      oyster_card10.touch_out(station2)
       expect(oyster_card10).not_to be_touched_in
     end
   end
+
+
 
 end

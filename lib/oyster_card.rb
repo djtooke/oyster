@@ -1,13 +1,14 @@
 require 'card_history'
 
 class OysterCard
-  attr_reader :balance, :entry_station
+  attr_reader :balance, :entry_station, :history
   MAX_CAPACITY = 90
   MIN_CAPACITY = 1
 
   def initialize(balance = 0)
     @balance = balance
     @entry_station = nil
+    @history = CardHistory.new
   end
 
   def touch_in(station)
@@ -16,9 +17,10 @@ class OysterCard
     @entry_station = station
   end
 
-  def touch_out
+  def touch_out(station)
     raise "You've already touched out" unless touched_in?
     deduct(MIN_CAPACITY)
+    log_journey(@entry_station, station)
     @entry_station = nil
   end
 
@@ -31,6 +33,10 @@ class OysterCard
     @balance += amount
   end
 
+  def readlog
+    @history.read
+  end
+
   private
 
   def deduct(amount)
@@ -40,4 +46,9 @@ class OysterCard
   def exceed_limit?(amount)
     @balance + amount > MAX_CAPACITY
   end
+
+  def log_journey(touchin, touchout)
+    @history.save(touchin, touchout)
+  end
+
 end
