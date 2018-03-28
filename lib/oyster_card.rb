@@ -1,7 +1,7 @@
 require 'card_history'
 
 class OysterCard
-  attr_reader :balance, :entry_station, :history
+  attr_reader :balance, :entry_station
   MAX_CAPACITY = 90
   MIN_CAPACITY = 1
 

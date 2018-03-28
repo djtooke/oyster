@@ -15,7 +15,7 @@ describe OysterCard do
   end
 
   it 'has a variable to record the journey history' do
-    expect(oyster_card).to respond_to (:history)
+    expect(oyster_card).to respond_to (:readlog)
   end
 
   describe '.top_up' do
