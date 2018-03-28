@@ -10,7 +10,7 @@ describe OysterCard do
   end
 
   it 'has a record of the last touched in station' do
-    expect(oyster_card).to respond_to (:last_touch_in)
+    expect(oyster_card).to respond_to (:entry_station)
   end
 
   describe '.top_up' do
@@ -38,7 +38,7 @@ describe OysterCard do
 
     it 'records the last station touched in' do
       oyster_card10.touch_in(station)
-      expect(oyster_card10.last_touch_in).to eq station
+      expect(oyster_card10.entry_station).to eq station
     end
 
     context 'when already touched in' do
@@ -60,6 +60,13 @@ describe OysterCard do
       oyster_card10.touch_in(station)
       expect { oyster_card10.touch_out }.to change { oyster_card10.balance }.from(10).to(9)
     end
+
+    it 'should delete the record of the entry station' do
+      oyster_card10.touch_in(station)
+      oyster_card10.touch_out
+      expect(oyster_card10.entry_station).to be_nil
+    end
+
   end
 
   describe '.touched_in?' do
