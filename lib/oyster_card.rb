@@ -1,31 +1,33 @@
 require 'card_history'
+require 'journey'
 
 class OysterCard
-  attr_reader :balance, :entry_station
+  attr_reader :balance, :current_journey
   MAX_CAPACITY = 90
   MIN_CAPACITY = 1
 
   def initialize(balance = 0)
     @balance = balance
-    @entry_station = nil
     @history = CardHistory.new
+    @current_journey = Journey.new(nil, false)
   end
 
   def touch_in(station)
     raise 'You are already touched in' if touched_in?
     raise 'Not enough balance' if @balance < MIN_CAPACITY
-    @entry_station = station
+    @current_journey = Journey.new(station)
   end
 
   def touch_out(station)
-    raise "You're not touched in" unless touched_in?
+    raise "You're not touched in" unless @current_journey.in_progress?
     deduct(MIN_CAPACITY)
-    log_journey(@entry_station, station)
-    clear_entry
+    @current_journey.complete(station)
+    log_journey
+    clear_journey
   end
 
   def touched_in?
-    @entry_station != nil
+    @current_journey.in_progress?
   end
 
   def top_up(amount)
@@ -47,12 +49,12 @@ class OysterCard
     @balance + amount > MAX_CAPACITY
   end
 
-  def log_journey(touchin, touchout)
-    @history.save(touchin, touchout)
+  def log_journey
+    @history.save(current_journey.entry_station, current_journey.end_station)
   end
 
-  def clear_entry
-    @entry_station = nil
+  def clear_journey
+    @current_journey = Journey.new(nil, false)
   end
 
 end

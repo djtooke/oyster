@@ -11,7 +11,7 @@ describe OysterCard do
   end
 
   it 'has a record of the last touched in station' do
-    expect(oyster_card).to respond_to (:entry_station)
+    expect(oyster_card).to respond_to (:current_journey)
   end
 
   it 'has a variable to record the journey history' do
@@ -35,7 +35,7 @@ describe OysterCard do
     it 'starts a journey' do
       oyster_card10.touch_in(station)
       # expect(oyster_card10.in_journey).to eq(true)
-      expect(oyster_card10.entry_station).not_to be_nil
+      expect(oyster_card10.current_journey).not_to be_nil
     end
 
     it 'should prevent touching in when balance is too low' do
@@ -44,7 +44,7 @@ describe OysterCard do
 
     it 'records the last station touched in' do
       oyster_card10.touch_in(station)
-      expect(oyster_card10.entry_station).to eq station
+      expect(oyster_card10.current_journey.entry_station).to eq station
     end
 
     context 'when already touched in' do
@@ -57,10 +57,10 @@ describe OysterCard do
 
   describe '.touch_out' do
 
-    it 'it ends a journey by deleting the entry station' do
+    it 'it ends a journey' do
       oyster_card10.touch_in(station)
       oyster_card10.touch_out(station2)
-      expect(oyster_card10.entry_station).to be_nil
+      expect(oyster_card10.current_journey.in_progress?).to be false
     end
 
     it 'charges minimum fare for a journey on touch out' do
