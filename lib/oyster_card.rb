@@ -1,21 +1,21 @@
-require 'card_history'
-require 'journey'
+require_relative './card_history.rb'
+require_relative './journey.rb'
 
 class OysterCard
   attr_reader :balance, :current_journey
   MAX_CAPACITY = 90
-  MIN_FARE = 1
+
 
   def initialize(balance = 0)
     @balance = balance
     @history = CardHistory.new
-    @current_journey = Journey.new(nil, false)
+    @current_journey = Journey.new({entry_station: nil, in_progress: false})
   end
 
   def touch_in(station)
-    raise 'You are already touched in' if touched_in?
-    raise 'Not enough balance' if @balance < MIN_FARE
-    @current_journey = Journey.new(station)
+    double_touch_in(station) if touched_in?
+    raise 'Not enough balance' if @balance < Journey::MIN_FARE
+    @current_journey = Journey.new(entry: station, in_progress: true)
   end
 
   def touch_out(station)
@@ -55,6 +55,12 @@ class OysterCard
 
   def clear_journey
     @current_journey = Journey.new(nil, false)
+  end
+
+  def double_touch_in(station)
+    @current_journey.complete(double_touch_in: station, penalty: true)
+    deduct(@current_journey.fare)
+    log_journey
   end
 
 end
