@@ -7,9 +7,9 @@ attr_reader :record
     @total = 0
   end
 
-  def save(touchin, touchout)
+  def save(journey)
     @total += 1
-    @record << {:journey => @total, :entry => touchin, :exit => touchout}
+    @record << journey
   end
 
   def read

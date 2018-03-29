@@ -1,3 +1,5 @@
+require 'oyster_card'
+
 class Journey
 
   attr_reader :entry_station, :end_station
@@ -14,6 +16,11 @@ class Journey
 
   def complete(station)
     @end_station = station
+    @in_progress = false
+  end
+
+  def fare
+    @fare = OysterCard::MIN_FARE
   end
 
 end

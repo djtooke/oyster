@@ -4,7 +4,7 @@ require 'journey'
 class OysterCard
   attr_reader :balance, :current_journey
   MAX_CAPACITY = 90
-  MIN_CAPACITY = 1
+  MIN_FARE = 1
 
   def initialize(balance = 0)
     @balance = balance
@@ -14,14 +14,14 @@ class OysterCard
 
   def touch_in(station)
     raise 'You are already touched in' if touched_in?
-    raise 'Not enough balance' if @balance < MIN_CAPACITY
+    raise 'Not enough balance' if @balance < MIN_FARE
     @current_journey = Journey.new(station)
   end
 
   def touch_out(station)
     raise "You're not touched in" unless @current_journey.in_progress?
-    deduct(MIN_CAPACITY)
     @current_journey.complete(station)
+    deduct(@current_journey.fare)
     log_journey
     clear_journey
   end
@@ -50,7 +50,7 @@ class OysterCard
   end
 
   def log_journey
-    @history.save(current_journey.entry_station, current_journey.end_station)
+    @history.save(@current_journey)
   end
 
   def clear_journey
