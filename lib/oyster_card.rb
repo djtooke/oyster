@@ -19,8 +19,7 @@ class OysterCard
   end
 
   def touch_out(station)
-    raise "You're not touched in" unless @current_journey.in_progress?
-    @current_journey.complete(station)
+    @current_journey.in_progress? ? @current_journey.complete(end_station: station) : @current_journey.complete(end_station: station, penalty: true)
     deduct(@current_journey.fare)
     log_journey
     clear_journey
@@ -54,7 +53,7 @@ class OysterCard
   end
 
   def clear_journey
-    @current_journey = Journey.new(nil, false)
+    @current_journey = Journey.new({in_progress: false})
   end
 
   def double_touch_in(station)

@@ -48,10 +48,7 @@ describe OysterCard do
     end
 
     context 'when already touched in' do
-      it 'raises an error' do
-        oyster_card.stub(:touched_in?) { true }
-        expect{ oyster_card.touch_in(station) }.to raise_error 'You are already touched in'
-      end
+     # Test for double_touch_in
     end
   end
 
@@ -71,13 +68,11 @@ describe OysterCard do
     it 'saves the journey start/end stations to the record' do
       oyster_card10.touch_in(station)
       oyster_card10.touch_out(station2)
-      expect(oyster_card10.readlog).to include(a_hash_including(:entry => station, :exit => station2))
+      expect(oyster_card10.readlog[0].entry_station).to match(station)
     end
 
     context 'when not touched in' do
-      it 'raises an error' do
-        expect {oyster_card10.touch_out(station2)}.to raise_error 'You\'re not touched in'
-      end
+      # Test for double touch out
     end
   end
 

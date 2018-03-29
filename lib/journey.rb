@@ -20,7 +20,6 @@ class Journey
   def complete(options = {})
     @end_station = options[:end_station]
     @double_touch_in = options[:double_touch_in] unless options[:double_touch_in].nil?
-#    @double_touch_in = options[:double_touch_in] @in_progress = false ; return fare(penalty: true)) unless options[:double_touch_in].nil?
     @in_progress = false
     @penalty = options[:penalty]
     fare
