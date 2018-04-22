@@ -32,23 +32,27 @@ describe OysterCard do
   end
 
   describe '.touch_in' do
-    it 'starts a journey' do
-      oyster_card10.touch_in(station)
-      # expect(oyster_card10.in_journey).to eq(true)
-      expect(oyster_card10.current_journey).not_to be_nil
-    end
-
     it 'should prevent touching in when balance is too low' do
       expect{ oyster_card.touch_in(station) }.to raise_error 'Not enough balance'
     end
 
-    it 'records the last station touched in' do
+    it 'begins a journey by recording the last station touched in' do
       oyster_card10.touch_in(station)
       expect(oyster_card10.current_journey.entry_station).to eq station
     end
 
     context 'when already touched in' do
-     # Test for double_touch_in
+      it 'should deduct the penalty fare' do
+        oyster_card10.touch_in(station)
+        oyster_card10.touch_in(station2)
+        expect(oyster_card10.balance).to eq 4
+      end
+
+      it 'should continue a journey from the last touched in station' do
+        oyster_card10.touch_in(station)
+        oyster_card10.touch_in(station2)
+        expect(oyster_card10.current_journey.entry_station).to eq station2
+      end
     end
   end
 
@@ -72,7 +76,10 @@ describe OysterCard do
     end
 
     context 'when not touched in' do
-      # Test for double touch out
+      it 'should deduct a penalty fare' do
+        oyster_card10.touch_out(station)
+        expect(oyster_card10.balance).to eq 4
+      end
     end
   end
 

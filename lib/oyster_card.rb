@@ -1,5 +1,6 @@
 require_relative './card_history.rb'
 require_relative './journey.rb'
+require_relative './station.rb'
 
 class OysterCard
   attr_reader :balance, :current_journey
