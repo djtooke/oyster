@@ -9,5 +9,5 @@ describe CardHistory do
   it 'should contain an accessible record of journeys' do
     expect(subject).to respond_to(:record)
   end
-  
+
 end
