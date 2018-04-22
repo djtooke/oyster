@@ -4,20 +4,20 @@ Oyster Card Challenge
 Overview
 ---------
 
-This repo recreates the functionality of London's Oyster Card system in Object-Oriented Ruby. This was our Week 2 challenge at Makers Academy, and was principally an exercise in Object Oriented Development (OOP) and Test-Driven Development (TDD).
+This repo recreates the functionality of London's Oyster Card system in Object-Oriented Ruby. This was our Week 2 challenge at Makers Academy, and was principally an exercise in Object Oriented Programming (OOP) and Test-Driven Development (TDD).
 
 Features
 ---------
 
 The software is run through the terminal and the following features are implemented:
 
-* Oyster cards and Stations can be created, and are contained within their own classes (`OysterCard` and `Station` respectively).
+* OysterCard and Station objects can be created.
 * Use `top_up()` to add money to your card.
 * You can `touch_in()` or `touch_out()` your oyster card at a station by adding the station name as an argument.
 * A fare will be deducted for a successful touch in and out.
-* A penalty fare is deducted for a double touch in or out (and for a double touch_in, you can continue your journey from the last touched in station)
-* Exceptions are raised on `touch_in` if your card does not have the minimum fare, or if you attempt to top up with more than the maximum card capacity.
-* A log of all your journeys is stored in journey objects within an accessible `history` variable on each card. This contains a `CardHistory` object which itself has a `total` number of journey and a `record`, which is an accessible array of `Journey` objects, containing attributes which store the `entry_station`, `end_station`, an `in_progress` marker, the `fare` and a `penalty` if deducted.
+* A penalty fare is deducted for a double touch in or out (and for a double `touch_in`, you can continue your journey from the last touched in station).
+* Exceptions are raised on `touch_in` if your card does not have the minimum fare, or if you attempt to top up more than the maximum amount permitted.
+* A log of all your journeys is stored in journey objects within an accessible `history` variable on each card. This contains a `CardHistory` object which itself has a `total` number of journey and a `record`, which is an accessible array of `Journey` objects, containing attributes which store the `entry_station`, `end_station`, an `in_progress` boolean marker, the `fare` and a `penalty` if deducted.
 
 Installation and running
 ---------
@@ -32,7 +32,7 @@ The Oyster card system requires Ruby 2.5.0, as well as the bundle gemfile instal
 Testing framework
 ---------
 
-Running `rspec` in the root directory will run the tests written alongside development of the software.
+Running `rspec` in the root directory will run the tests written alongside development of the software. The test details can be found in the spec folder.
 
 
 Further features
