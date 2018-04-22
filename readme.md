@@ -44,7 +44,7 @@ Each instance of the `Station` class holds a variable to store the zone of that 
 Coding experience
 ---------
 
-As an object-oriented project I was particularly concerned to encapsulate the correct methods and behaviour within the appropriate classes, and as code developed, to extract classes where necessary (such as for the `Journey` and `CardHistory` classes). It was also an important exercise in assessing the visibility of public and private methods and the accessibility of variables to ensure appropriate scoping.
+In writing this object-oriented project I was particularly concerned to encapsulate the correct variables, methods and behaviour within the appropriate classes, and as code developed, to extract classes where necessary (such as for the `Journey` and `CardHistory` classes). It was also an important exercise in assessing the visibility of public and private methods and the accessibility of variables to ensure appropriate scoping.
 
 It was instructive to drive development through reading user stories. Using these to inform feature tests in IRB and unit tests in RSpec meant that the code was shaped by the most important aspects of user behaviour. I was also keen to write all unit tests in advance of writing code and to follow the red-green-refactor process. I was also able to raise exceptions and properly test these exceptions.
 
