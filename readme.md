@@ -52,4 +52,4 @@ It was instructive to drive development through reading user stories. Using thes
 Acknowledgements
 ---------
 
-I worked on this code with a number of different pairs over the course of this week, and must acknowledge in particular the input of Jihin Ip, Andrew Kemp, and Irbe Krumina.
+I worked on this code with a number of different pairs over the course of this week, and must acknowledge in particular the input of Jihin Ip (mitsukan), Andrew Kemp (andyk144), and Irbe Krumina (irbekm).
